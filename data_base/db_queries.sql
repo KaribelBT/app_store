@@ -24,6 +24,7 @@ CREATE TABLE users (
   password VARCHAR(60) NOT NULL,
   isDev BOOLEAN NOT NULL
 );
+INSERT  INTO  users  VALUES (1,'clienttest@gmail.com', 'clienttest', 0),(2,'devtest@gmail.com','devtest',1);
 
 CREATE TABLE purchases (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
