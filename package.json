@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KaribelBT/app_store"
+  },
   "author": "karibel barco taboada",
   "license": "ISC",
   "dependencies": {

@@ -1,6 +1,7 @@
 CREATE DATABASE app_store;
 
 DROP TABLE IF EXISTS  fop;
+DROP TABLE IF EXISTS  categories;
 DROP TABLE IF EXISTS  users;
 DROP TABLE IF EXISTS  purchases;
 DROP TABLE IF EXISTS  apps;
@@ -8,6 +9,11 @@ DROP TABLE IF EXISTS  purchases_apps;
 DROP TABLE IF EXISTS  dev_apps;
 
 CREATE TABLE fop (
+  id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  name VARCHAR(60) NOT NULL
+);
+
+CREATE TABLE categories (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   name VARCHAR(60) NOT NULL
 );
@@ -32,11 +38,12 @@ CREATE TABLE purchases (
 
 CREATE TABLE apps (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT ,
-  category VARCHAR(60) NOT NULL,
+  id_category INT NOT NULL,
   name VARCHAR(60) NOT NULL,
   price FLOAT NOT NULL,
   img_url VARCHAR(255) NOT NULL,
-  enable BOOLEAN NOT NULL
+  KEY  fk_id_category_id  (id_category),
+  CONSTRAINT fk_id_category_id FOREIGN KEY (id_category) REFERENCES categories (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE purchases_apps (
