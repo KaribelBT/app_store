@@ -70,6 +70,16 @@ server.get('/api/categories', myUser.validToken(jwt), async (req, res) => {
     res.status(200).json(categoriesList);
 });
 
+//lista apps por categoría
+server.get('/api/categories/apps/:id', myUser.validToken(jwt), myCategory.categoryNotFound(sequelize), async (req, res) => {
+    let appsList = await myCategory.listApps(sequelize, req.params.id);
+    if (appsList.length > 0) {
+        res.status(200).json(appsList);
+    } else {
+        res.status(400).json({error: "Bad request, category empty"})
+    }
+});
+
 //crea apps
 server.post('/api/apps', myUser.isDev(jwt), myApp.appExist(sequelize), async (req, res) => {
     try {
