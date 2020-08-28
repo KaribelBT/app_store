@@ -10,6 +10,8 @@ const users = require('./models/users.js');
 let myUser = new users.Users();
 const categories = require('./models/categories.js');
 let myCategory = new categories.Categories();
+const apps = require('./models/apps.js');
+let myApp = new apps.Apps();
 
 server.use(bodyParser.json());
 
@@ -54,7 +56,7 @@ server.post('/api/users/login', async (req, res) => {
             });
             res.status(200).json({ token });
             return;
-        } else{
+        } else {
             res.status(409).json({ error: 'Conflict, user not exist or invalid password' })
         }
     } catch {
@@ -69,13 +71,39 @@ server.get('/api/categories', myUser.validToken(jwt), async (req, res) => {
 });
 
 //crea apps
-server.post('/api/apps', async (req, res) => {
-    const { name, price, img_url, stock } = req.body;
-    let create = await myProduct.create(sequelize, name, price, img_url, stock);
-    if (create.length > 0) {
-        let user = await myProduct.get(sequelize, create[0]);
-        res.status(201).json({ user });
-    } else {
+server.post('/api/apps', myUser.isDev(jwt), myApp.appExist(sequelize), async (req, res) => {
+    try {
+        const { id_category, name, price, img_url } = req.body;
+        let create = await myApp.create(sequelize, id_category, name, price, img_url);
+        if (create.length > 0) {
+            let app = await myApp.get(sequelize, create[0]);
+            res.status(201).json({ app });
+        }
+    } catch (error) {
         res.status(400).json({ error: 'Bad Request, invalid or missing input' });
+    }
+});
+
+//modifica apps
+server.put('/api/apps/:id', myUser.isDev(jwt), myApp.appNotFound(sequelize), async (req, res) => {
+    try {
+        const { price, img_url} = req.body;
+        await myApp.update(sequelize, req.params.id, price, img_url);
+        let appUpdated = await myApp.get(sequelize, req.params.id);
+        appUpdated = appUpdated[0];
+        res.status(200).json({ appUpdated });
+    } catch {
+        res.status(400).json({ error: 'Bad Request, invalid or missing input' })
+    };
+});
+
+//elimina app
+server.delete('/api/apps/:id', myUser.isDev(jwt), myApp.appNotFound(sequelize), async (req, res) => {
+    try {
+        await myApp.delete(sequelize, req.params.id);
+        res.status(200).json({ message: 'Success, app deleted' });
+    }
+    catch{
+        res.status(400).json({ error: 'Bad Request, invalid or missing input' })
     }
 });

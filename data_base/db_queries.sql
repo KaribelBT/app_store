@@ -49,6 +49,8 @@ CREATE TABLE apps (
   CONSTRAINT fk_id_category_id FOREIGN KEY (id_category) REFERENCES categories (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
+INSERT  INTO  apps  VALUES (1, 1, 'test app 1', 50.00, "url.com");
+
 CREATE TABLE purchases_apps (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   id_purchase INT NOT NULL,
