@@ -8,6 +8,8 @@ const Sequelize = require('sequelize');
 const sequelize = new Sequelize('mysql://root@127.0.0.1:3306/app_store')
 const users = require('./models/users.js');
 let myUser = new users.Users();
+const categories = require('./models/categories.js');
+let myCategory = new categories.Categories();
 
 server.use(bodyParser.json());
 
@@ -57,5 +59,23 @@ server.post('/api/users/login', async (req, res) => {
         }
     } catch {
         res.status(400).json({ error: 'Bad Request, invalid or missing input' })
+    }
+});
+
+//lista categorías
+server.get('/api/categories', myUser.validToken(jwt), async (req, res) => {
+    let categoriesList = await myCategory.list(sequelize);
+    res.status(200).json(categoriesList);
+});
+
+//crea apps
+server.post('/api/apps', async (req, res) => {
+    const { name, price, img_url, stock } = req.body;
+    let create = await myProduct.create(sequelize, name, price, img_url, stock);
+    if (create.length > 0) {
+        let user = await myProduct.get(sequelize, create[0]);
+        res.status(201).json({ user });
+    } else {
+        res.status(400).json({ error: 'Bad Request, invalid or missing input' });
     }
 });
