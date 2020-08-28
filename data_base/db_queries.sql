@@ -6,7 +6,6 @@ DROP TABLE IF EXISTS  users;
 DROP TABLE IF EXISTS  purchases;
 DROP TABLE IF EXISTS  apps;
 DROP TABLE IF EXISTS  purchases_apps;
-DROP TABLE IF EXISTS  dev_apps;
 
 CREATE TABLE fop (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -42,14 +41,17 @@ CREATE TABLE purchases (
 CREATE TABLE apps (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT ,
   id_category INT NOT NULL,
+  id_dev INT NOT NULL,
   name VARCHAR(60) NOT NULL,
   price FLOAT NOT NULL,
   img_url VARCHAR(255) NOT NULL,
   KEY  fk_id_category_id  (id_category),
-  CONSTRAINT fk_id_category_id FOREIGN KEY (id_category) REFERENCES categories (id) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY  fk_id_dev_id  (id_dev),
+  CONSTRAINT fk_id_category_id FOREIGN KEY (id_category) REFERENCES categories (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT fk_id_dev_id FOREIGN KEY (id_dev) REFERENCES users (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
-INSERT  INTO  apps  VALUES (1, 1, 'test app 1', 50.00, "url.com");
+INSERT  INTO  apps  VALUES (1, 1,2, 'test app 1', 50.00, "url.com");
 
 CREATE TABLE purchases_apps (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -59,14 +61,4 @@ CREATE TABLE purchases_apps (
   KEY  fk_id_app_id  (id_app),
   CONSTRAINT fk_id_app_id FOREIGN KEY (id_app) REFERENCES apps (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT fk_id_purchase_id FOREIGN KEY (id_purchase) REFERENCES purchases (id) ON DELETE NO ACTION ON UPDATE NO ACTION
-);
-
-CREATE TABLE devs_apps (
-  id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-  id_user INT NOT NULL,
-  id_app INT NOT NULL,
-  KEY  fk_id_users_id  (id_user),
-  KEY  fk_id_apps_id  (id_app),
-  CONSTRAINT fk_id_apps_id FOREIGN KEY (id_app) REFERENCES apps (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT fk_id_users_id FOREIGN KEY (id_user) REFERENCES users (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );

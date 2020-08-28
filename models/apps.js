@@ -1,14 +1,15 @@
 class Apps{
-    create(sql, id_category, name, price, img_url) {
+    create(sql, id_category, name, price, img_url,id_dev) {
         let resp = sql.query(
-            `INSERT INTO apps (id_category, name, price, img_url) 
-             VALUES (:id_category, :name, :price, :img_url)`,
+            `INSERT INTO apps (id_category, name, price, img_url, id_dev) 
+             VALUES (:id_category, :name, :price, :img_url, :id_dev)`,
             {
                 replacements: {
                     id_category,
                     name,
                     price,
                     img_url,
+                    id_dev
                 }
             });
         return resp
@@ -24,6 +25,17 @@ class Apps{
         });
         return resp;
     };
+    listDev(sql, id_dev){
+        let resp = sql.query(
+            `SELECT * FROM apps 
+            WHERE id_dev = :id_dev`, {
+            replacements: {
+                id_dev
+            },
+            type: sql.QueryTypes.SELECT,
+        })
+        return resp;
+    }
     update(sql, id, price, img_url) {
         let resp = sql.query(
             `UPDATE apps

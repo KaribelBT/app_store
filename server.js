@@ -84,13 +84,23 @@ server.get('/api/categories/apps/:id', myUser.validToken(jwt), myCategory.catego
 server.post('/api/apps', myUser.isDev(jwt), myApp.appExist(sequelize), async (req, res) => {
     try {
         const { id_category, name, price, img_url } = req.body;
-        let create = await myApp.create(sequelize, id_category, name, price, img_url);
+        let create = await myApp.create(sequelize, id_category, name, price, img_url,req.user.id);
         if (create.length > 0) {
             let app = await myApp.get(sequelize, create[0]);
             res.status(201).json({ app });
         }
     } catch (error) {
         res.status(400).json({ error: 'Bad Request, invalid or missing input' });
+    }
+});
+
+//lista apps creadas por developer
+server.get('/api/apps', myUser.isDev(jwt), async (req, res) => {
+    let appsList = await myApp.listDev(sequelize, req.user.id);
+    if(appsList.length > 0) {
+        res.status(200).json({ appsList });
+    } else {
+        res.status(404).json({ error: 'Not found'});
     }
 });
 
