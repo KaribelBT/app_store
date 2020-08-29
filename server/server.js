@@ -1,7 +1,8 @@
 const express = require('express');
 const server = express();
-const port = 3000;
+const port = 3001;
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const secret = require('./config/config.js');
 const Sequelize = require('sequelize');
@@ -17,6 +18,7 @@ let myPurchase = new purchases.Purchases();
 
 
 server.use(bodyParser.json());
+server.use(cors());
 
 //inicia servidor
 server.listen(port, () => {
