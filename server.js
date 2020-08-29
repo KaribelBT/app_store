@@ -12,6 +12,9 @@ const categories = require('./models/categories.js');
 let myCategory = new categories.Categories();
 const apps = require('./models/apps.js');
 let myApp = new apps.Apps();
+const purchases = require('./models/purchases.js');
+let myPurchase = new purchases.Purchases();
+
 
 server.use(bodyParser.json());
 
@@ -76,7 +79,7 @@ server.get('/api/categories/apps/:id', myUser.validToken(jwt), myCategory.catego
     if (appsList.length > 0) {
         res.status(200).json(appsList);
     } else {
-        res.status(400).json({error: "Bad request, category empty"})
+        res.status(400).json({ error: "Bad request, category empty" })
     }
 });
 
@@ -84,7 +87,7 @@ server.get('/api/categories/apps/:id', myUser.validToken(jwt), myCategory.catego
 server.post('/api/apps', myUser.isDev(jwt), myApp.appExist(sequelize), async (req, res) => {
     try {
         const { id_category, name, price, img_url } = req.body;
-        let create = await myApp.create(sequelize, id_category, name, price, img_url,req.user.id);
+        let create = await myApp.create(sequelize, id_category, name, price, img_url, req.user.id);
         if (create.length > 0) {
             let app = await myApp.get(sequelize, create[0]);
             res.status(201).json({ app });
@@ -97,17 +100,17 @@ server.post('/api/apps', myUser.isDev(jwt), myApp.appExist(sequelize), async (re
 //lista apps creadas por developer
 server.get('/api/apps', myUser.isDev(jwt), async (req, res) => {
     let appsList = await myApp.listDev(sequelize, req.user.id);
-    if(appsList.length > 0) {
+    if (appsList.length > 0) {
         res.status(200).json({ appsList });
     } else {
-        res.status(404).json({ error: 'Not found'});
+        res.status(404).json({ error: 'Not found' });
     }
 });
 
 //modifica apps
 server.put('/api/apps/:id', myUser.isDev(jwt), myApp.appNotFound(sequelize), async (req, res) => {
     try {
-        const { price, img_url} = req.body;
+        const { price, img_url } = req.body;
         await myApp.update(sequelize, req.params.id, price, img_url);
         let appUpdated = await myApp.get(sequelize, req.params.id);
         appUpdated = appUpdated[0];
@@ -124,6 +127,27 @@ server.delete('/api/apps/:id', myUser.isDev(jwt), myApp.appNotFound(sequelize), 
         res.status(200).json({ message: 'Success, app deleted' });
     }
     catch{
+        res.status(400).json({ error: 'Bad Request, invalid or missing input' })
+    }
+});
+
+//crea compra
+server.post('/api/buy', myUser.validToken(jwt), async (req, res) => {
+    try {
+        const id_user = req.user.id;
+        const id_apps = req.body.id_apps;
+        let appsToBuy = id_apps.map(async (app) => await myApp.get(sequelize, app));
+        let appArr = await Promise.all(appsToBuy);
+        let priceTotal = 0;
+        appArr.map(app => {
+            priceTotal += app[0].price
+        });
+        let id_purchase = await myPurchase.create(sequelize, priceTotal, id_user);
+        let insertPurchasesApps = id_apps.map(async (app) => await myPurchase.insertPurchasesApps(sequelize, id_purchase[0], app));
+        await Promise.all(insertPurchasesApps);
+        let purchase = await myPurchase.get(sequelize, id_user, id_purchase[0]);
+        res.status(201).json(purchase);
+    } catch (error) {
         res.status(400).json({ error: 'Bad Request, invalid or missing input' })
     }
 });
