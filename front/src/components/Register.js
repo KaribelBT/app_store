@@ -32,7 +32,18 @@ class Register extends Component {
             body: JSON.stringify(this.state)
         });
         let resp = await result.json();
-        console.log(resp)
+        if(resp.id){
+            let resultLogin = await fetch(`http://localhost:3001/api/users/login`, {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(this.state)
+            });
+            let respLogin = await resultLogin.json();
+            console.log(respLogin)
+        }
+    }
+    showRegisterForm = () => {
+        this.props.showRegisterForm(false)
     }
     render() {
         return (
@@ -56,6 +67,15 @@ class Register extends Component {
                                         <div className="col-sm-12">
                                              <input type="submit" name="register-submit" id="register-submit" tabIndex="4" className="form-control btn btn-register" value="Register Now" />
 										</div>
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="row">
+                                        <div className="col-lg-12">
+                                            <div className="text-center">
+                                                <a onClick={this.showRegisterForm} href="#" tabIndex="5" className="forgot-password">Already have an account? Sign in here</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 							</form>

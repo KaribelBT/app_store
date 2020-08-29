@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 
 class Login extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state={
-            email:null,
-            password:null
+        this.state = {
+            email: null,
+            password: null
         }
     }
-    handleEmail = (event) =>{
+    handleEmail = (event) => {
         this.setState({
-            email:event.target.value
+            email: event.target.value
         })
     }
-    handlePassword = (event) =>{
+    handlePassword = (event) => {
         this.setState({
-            password:event.target.value
+            password: event.target.value
         })
     }
     handleSubmit = async (event) => {
@@ -27,6 +27,9 @@ class Login extends Component {
         });
         let resp = await result.json();
         console.log(resp)
+    }
+    showRegisterForm = () => {
+        this.props.showRegisterForm(true)
     }
     render() {
         return (
@@ -41,14 +44,19 @@ class Login extends Component {
                                 <div className="form-group">
                                     <input onChange={this.handlePassword} type="password" name="password" id="password" tabIndex="2" className="form-control" placeholder="Password" />
                                 </div>
-                                <div className="form-group text-center">
-                                    <input type="checkbox" tabIndex="3" className="" name="remember" id="remember" />
-                                    <label htmlFor="remember"> Remember Me</label>
-                                </div>
                                 <div className="form-group">
                                     <div className="row">
                                         <div className="col-sm-12">
                                             <input type="submit" name="login-submit" id="login-submit" tabIndex="4" className="form-control btn btn-login" value="Log In" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="row">
+                                        <div className="col-lg-12">
+                                            <div className="text-center">
+                                                <a onClick={this.showRegisterForm} href="#" tabIndex="5" className="forgot-password">Don't have an account? Sign up here</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
