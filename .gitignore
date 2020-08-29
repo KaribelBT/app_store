@@ -39,6 +39,7 @@ build/Release
 
 # Dependency directories
 server/node_modules/
+front/node_modules/
 server/config/config.js
 jspm_packages/
 
@@ -103,3 +104,24 @@ dist
 
 # TernJS port file
 .tern-port
+
+#front project
+front/.pnp
+front/.pnp.js
+
+# testing
+front/coverage
+
+# production
+front/build
+
+# misc
+front/.DS_Store
+front/.env.local
+front/.env.development.local
+front/.env.test.local
+front/.env.production.local
+
+front/npm-debug.log*
+front/yarn-debug.log*
+front/yarn-error.log*
