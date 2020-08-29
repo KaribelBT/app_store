@@ -151,3 +151,15 @@ server.post('/api/buy', myUser.validToken(jwt), async (req, res) => {
         res.status(400).json({ error: 'Bad Request, invalid or missing input' })
     }
 });
+
+//elimina compra
+server.delete('/api/buy', myUser.validToken(jwt), async (req, res) => {
+    try {
+        await myPurchase.deletePurchasedApps(sequelize, req.body.id);
+        await myPurchase.delete(sequelize, req.body.id);
+        res.status(200).json({ message: 'Success, purchase deleted' });
+    }
+    catch{
+        res.status(400).json({ error: 'Bad Request, invalid or missing input' })
+    }
+});

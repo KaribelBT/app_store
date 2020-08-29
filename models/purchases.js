@@ -6,7 +6,7 @@ class Purchases {
             {
                 replacements: {
                     id_user,
-                    price                    
+                    price
                 }
             });
         return resp
@@ -21,7 +21,7 @@ class Purchases {
                     id_app
                 }
             });
-        return resp 
+        return resp
     }
     get(sql, id_user, id_purchase) {
         let resp = sql.query(
@@ -32,13 +32,35 @@ class Purchases {
             JOIN categories c ON c.id = a.id_category
             WHERE p.id_user = :id_user
             AND p.id = :id_purchase`, {
-                replacements: {
-                    id_user,
-                    id_purchase
-                },
-                type: sql.QueryTypes.SELECT
-            })
+            replacements: {
+                id_user,
+                id_purchase
+            },
+            type: sql.QueryTypes.SELECT
+        })
         return resp;
+    }
+    delete(sql, id) {
+        let resp = sql.query(
+            `DELETE FROM purchases
+            WHERE id = :id`, {
+            replacements: {
+                id
+            },
+            type: sql.QueryTypes.DELETE
+        });
+        return resp
+    }
+    deletePurchasedApps(sql, id_purchase) {
+        let resp = sql.query(
+            `DELETE FROM purchases_apps
+            WHERE id_purchase = :id_purchase`, {
+            replacements: {
+                id_purchase
+            },
+            type: sql.QueryTypes.DELETE
+        });
+        return resp
     }
 };
 module.exports = { Purchases };
