@@ -129,7 +129,7 @@ server.delete('/api/apps/:id', myUser.isDev(jwt), myApp.appNotFound(sequelize), 
         res.status(200).json({ message: 'Success, app deleted' });
     }
     catch{
-        res.status(400).json({ error: 'Bad Request, invalid or missing input' })
+        res.status(400).json({ error: 'App purchased, you cannot delete it' })
     }
 });
 
