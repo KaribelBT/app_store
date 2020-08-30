@@ -5,7 +5,6 @@ class Listapp extends Component {
         super(props)
     }
     deleteApp = async (id) =>{
-        console.log(id)
         let result = await fetch(`http://localhost:3001/api/apps/${id}`, {
             method: 'DELETE',
             headers: { 
@@ -22,6 +21,9 @@ class Listapp extends Component {
             this.props.modalText(resp.message)
             this.props.listApp()
         }
+    }
+    updateApp = (id) =>{
+        this.props.getApp(id)
     }
     render() {
         return (
@@ -42,7 +44,7 @@ class Listapp extends Component {
                             <td>{a.name}</td>
                             <td>{a.img_url}</td>
                             <td>{a.price}</td>
-                            <td> <button type="button" className="btn btn-success"><i className="fas fa-edit"></i></button> 
+                            <td> <button type="button" onClick={() => { this.updateApp(a.id) }} className="btn btn-success"><i className="fas fa-edit"></i></button> 
                                 <button onClick={() => { this.deleteApp(a.id) }} type="button" className="btn btn-danger"><i className="far fa-trash-alt"></i></button></td>
                         </tr>);
 

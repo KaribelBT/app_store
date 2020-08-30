@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Modal from './Modal.jsx';
 import Createapp from './Createapp.jsx'
+import Updateapp from './Updateapp.jsx'
 import Listapp from './Listapp.jsx'
 
 class Home extends Component {
@@ -9,7 +10,8 @@ class Home extends Component {
         this.state = {
             displayModal: 'none',
             text: null,
-            apps: []
+            apps: [],
+            selectedApp:{}
         }
     }
     modalDisplay = (value) => {
@@ -37,6 +39,12 @@ class Home extends Component {
             })
         }
     }
+    getApp = (id) =>{
+       let appSelected = this.state.apps.filter(a => a.id == id)
+       this.setState({
+        selectedApp:appSelected[0]
+       })
+    }
     componentDidMount() {
         if (this.props.user.isDev) {
             this.listApp()
@@ -49,16 +57,26 @@ class Home extends Component {
                     <div className="row">
                         <div className="col-lg-12">
                             <h1>Welcome  {this.props.user.email}</h1>
-                            <Createapp modalDisplay={this.modalDisplay} modalText={this.modalText} />
+                            {/* <Createapp modalDisplay={this.modalDisplay} modalText={this.modalText} /> */}
+                            {Object.keys(this.state.selectedApp).length > 0 ?
+                                <Updateapp 
+                                    modalDisplay={this.modalDisplay} 
+                                    modalText={this.modalText} 
+                                    selectedApp={this.state.selectedApp}
+                                /> :
+                                null
+                            }
                             {this.state.apps.length > 0 ?
                                 <Listapp
                                     apps={this.state.apps}
                                     modalDisplay={this.modalDisplay}
                                     modalText={this.modalText}
                                     listApp={this.listApp}
+                                    getApp={this.getApp}
                                 /> :
                                 <div> <span>No apps created</span></div>
                             }
+                            
                         </div>
                     </div>
                 </div>

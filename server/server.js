@@ -56,9 +56,7 @@ server.post('/api/users/login', async (req, res) => {
                 email: userLogged[0].email,
                 isDev: userLogged[0].isDev
             }
-            const token = jwt.sign(payload, secret.secret, {
-                expiresIn: 1440
-            });
+            const token = jwt.sign(payload, secret.secret);
             res.status(200).json({ token });
             return;
         } else {

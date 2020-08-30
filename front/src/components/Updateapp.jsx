@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 
-class Createapp extends Component {
+class Upateapp extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            categories:[],
-            name: null,
-            price: null,
-            img_url: null,
-            category:null
+            selectedApp:{},
+            categories:[]
         }
     }
     async componentDidMount(){
-        let result = await fetch(`http://localhost:3001/api/categories`, {
+       this.setState({
+           selectedApp:this.props.selectedApp
+       })
+       let result = await fetch(`http://localhost:3001/api/categories`, {
             method: 'GET',
             headers: { 
                 "Content-Type": "application/json",
@@ -26,45 +26,33 @@ class Createapp extends Component {
             })
         }
     }
-    handleCategories = (event) => {
-        this.setState({
-            category: event.target.value
-        })
-    }
-    handleName = (event) => {
-        this.setState({
-            name: event.target.value
-        })
-    }
     handlePrice = (event) => {
-        this.setState({
-            price: event.target.value
-        })
+        let newState = Object.assign({}, this.state)
+        newState.selectedApp.price = event.target.value
+        this.setState(newState)
     }
     handleImgUrl = (event) => {
-        this.setState({
-            img_url: event.target.value
-        })
+        let newState = Object.assign({}, this.state)
+        newState.selectedApp.img_url = event.target.value
+        this.setState(newState)
     }
     handleSubmit = async (event) => {
         event.preventDefault()
-        let result = await fetch(`http://localhost:3001/api/apps`, {
-            method: 'POST',
+        let result = await fetch(`http://localhost:3001/api/apps/${this.state.selectedApp.id}`, {
+            method: 'PUT',
             headers: { 
                 "Content-Type": "application/json",
                 "Authorization" : `Bearer ${JSON.parse(localStorage.getItem('token'))}` 
             },
             body: JSON.stringify({
-                "id_category": JSON.parse(this.state.category) ? JSON.parse(this.state.category) : null,
-                "name": this.state.name ? this.state.name : null,
-                "price": JSON.parse(this.state.price) ? JSON.parse(this.state.price) : null,
-                "img_url": this.state.img_url ? this.state.img_url : null
+                "price": JSON.parse(this.state.selectedApp.price) ? JSON.parse(this.state.selectedApp.price) : null,
+                "img_url": this.state.selectedApp.img_url ? this.state.selectedApp.img_url : null
             })
         });
         let resp = await result.json();
-        if(resp.app){
+        if(resp.appUpdated){
             this.props.modalDisplay('block')
-            this.props.modalText('App created succesfully')
+            this.props.modalText('App updated succesfully')
         }else{
             this.props.modalDisplay('block')
             this.props.modalText(resp.error)
@@ -78,27 +66,26 @@ class Createapp extends Component {
                         <div className="col-lg-12">
                             <form onSubmit={this.handleSubmit}>
                                 <div className="form-group">
-                                    <select onChange={this.handleCategories}  name="categories" className="form-control">
-                                        <option value="">Select an app category</option>
+                                    <select disabled="disabled"  name="categories" className="form-control" value={this.state.selectedApp.id_category}>
                                         {this.state.categories.map(c=>{
-                                            return (<option key={c.id}  value={c.id}>{c.name}</option>); 
+                                            return (<option  key={c.id}  defaultValue={c.id}>{c.name}</option>); 
                                             
                                         })}
                                     </select>
                                 </div>
                                 <div className="form-group">
-                                    <input onChange={this.handleName} type="text" name="name" tabIndex="1" className="form-control" placeholder="Name" />
+                                    <input disabled="disabled" type="text" name="name" tabIndex="1" className="form-control" placeholder="Name" defaultValue={this.state.selectedApp.name} />
                                 </div>
                                 <div className="form-group">
-                                    <input onChange={this.handlePrice} type="number" name="price" tabIndex="2" className="form-control" placeholder="Price" />
+                                    <input onChange={this.handlePrice} type="number" name="price" tabIndex="2" className="form-control" placeholder="Price" defaultValue={this.state.selectedApp.price} />
                                 </div>
                                 <div className="form-group">
-                                    <input onChange={this.handleImgUrl} type="text" name="img_url" tabIndex="1" className="form-control" placeholder="Image Url" />
+                                    <input onChange={this.handleImgUrl} type="text" name="img_url" tabIndex="1" className="form-control" placeholder="Image Url" defaultValue={this.state.selectedApp.img_url} />
                                 </div>                                
                                 <div className="form-group">
                                     <div className="row">
                                         <div className="col-sm-12">
-                                            <input type="submit" name="createApp-submit" tabIndex="4" className="form-control btn btn-login" value="Create App" />
+                                            <input type="submit" name="updateApp-submit" tabIndex="4" className="form-control btn btn-login" value="Update App" />
                                         </div>
                                     </div>
                                 </div>
@@ -111,4 +98,4 @@ class Createapp extends Component {
     }
 }
 
-export default Createapp;
+export default Upateapp;
