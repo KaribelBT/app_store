@@ -65,6 +65,7 @@ class Createapp extends Component {
         if(resp.app){
             this.props.modalDisplay('block')
             this.props.modalText('App created succesfully')
+            this.props.listApp()
         }else{
             this.props.modalDisplay('block')
             this.props.modalText(resp.error)
@@ -72,7 +73,7 @@ class Createapp extends Component {
     }
     render() {
         return (
-            <div className="row form-box">
+            <div className="row">
                 <div className="col-lg-12">
                     <div className="row">
                         <div className="col-lg-12">

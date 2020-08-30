@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import './App.css';
+import Navbar from './components/Navbar.jsx'
+import Modal from './components/Modal.jsx'
 import Login from './components/Login.jsx'
 import Register from './components/Register.jsx'
 import Home from './components/Home.jsx'
-import Modal from './components/Modal.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -13,12 +14,18 @@ class App extends Component {
       token: localStorage.getItem('token') ? localStorage.getItem('token') : false,
       user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
       displayModal: 'none',
+      displayCreate:false,
       text: null
     }
   }
   showRegisterForm = (value) => {
     this.setState({
       showRegister: value
+    })
+  }
+  showCreate = (value) => {
+    this.setState({
+      displayCreate: value
     })
   }
   logUser = (value) => {
@@ -48,29 +55,40 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="container">
-        {Object.keys(this.state.user).length == 0 ?
-          <div>
-            {this.state.showRegister ?
-              <Register
-                showRegisterForm={this.showRegisterForm}
-                logUser={this.logUser}
-                modalDisplay={this.modalDisplay} 
-                modalText={this.modalText}
-              /> :
-              <Login
-                showRegisterForm={this.showRegisterForm}
-                logUser={this.logUser}
-                modalDisplay={this.modalDisplay} 
-                modalText={this.modalText}
-              />}
-          </div> :
-          <div>
-            <Home user={this.state.user} />
-          </div>
-        }
-        <Modal text={this.state.text} display={this.state.displayModal} modalDisplay={this.modalDisplay}/>
+      <div>
+        <Navbar 
+          user={this.state.user}
+          showCreate={this.showCreate} 
+        />
+        <div className="container">
+          {Object.keys(this.state.user).length == 0 ?
+            <div>
+              {this.state.showRegister ?
+                <Register
+                  showRegisterForm={this.showRegisterForm}
+                  logUser={this.logUser}
+                  modalDisplay={this.modalDisplay}
+                  modalText={this.modalText}
+                /> :
+                <Login
+                  showRegisterForm={this.showRegisterForm}
+                  logUser={this.logUser}
+                  modalDisplay={this.modalDisplay}
+                  modalText={this.modalText}
+                />}
+            </div> :
+            <div>
+              <Home 
+                user={this.state.user}
+                displayCreate={this.state.displayCreate}
+                showCreate={this.showCreate}  
+              />
+            </div>
+          }
+          <Modal text={this.state.text} display={this.state.displayModal} modalDisplay={this.modalDisplay} />
+        </div>
       </div>
+
     );
   }
 }

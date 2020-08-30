@@ -37,6 +37,7 @@ class Home extends Component {
             this.setState({
                 apps: resp.appsList
             })
+            this.props.showCreate(false)
         }
     }
     getApp = (id) =>{
@@ -52,13 +53,22 @@ class Home extends Component {
     }
     render() {
         return (
-            <div className="row">
+            <div className="row form-box">
                 <div className="col-lg-12">
                     <div className="row">
                         <div className="col-lg-12">
                             <h1>Welcome  {this.props.user.email}</h1>
-                            <Createapp modalDisplay={this.modalDisplay} modalText={this.modalText} />
-                            {Object.keys(this.state.selectedApp).length > 0 ?
+                            {this.props.displayCreate ?
+                                <Createapp 
+                                    modalDisplay={this.modalDisplay} 
+                                    modalText={this.modalText}
+                                    listApp={this.listApp} 
+
+                                />
+                                :
+                                null
+                            }
+                            {Object.keys(this.state.selectedApp).length > 0 ? 
                                 <Updateapp 
                                     modalDisplay={this.modalDisplay} 
                                     modalText={this.modalText} 
@@ -66,7 +76,7 @@ class Home extends Component {
                                 /> :
                                 null
                             }
-                            {this.state.apps.length > 0 ?
+                            {this.state.apps.length > 0 && !this.props.displayCreate ?
                                 <Listapp
                                     apps={this.state.apps}
                                     modalDisplay={this.modalDisplay}
@@ -74,7 +84,7 @@ class Home extends Component {
                                     listApp={this.listApp}
                                     getApp={this.getApp}
                                 /> :
-                                <div> <span>No apps created</span></div>
+                                null
                             }
                             
                         </div>

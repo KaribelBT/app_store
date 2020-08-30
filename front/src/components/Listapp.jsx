@@ -27,7 +27,7 @@ class Listapp extends Component {
     }
     render() {
         return (
-            <div className="row form-box">
+            <div className="row">
                 <table className="table">
                     <thead>
                         <tr>
