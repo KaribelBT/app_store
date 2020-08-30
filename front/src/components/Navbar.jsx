@@ -4,8 +4,13 @@ class Navbar extends Component {
     constructor(props) {
         super(props)
     }
-    create = () =>{
+    create = () => {
         this.props.showCreate(true)
+    }
+    logout = () => {
+        localStorage.removeItem('user')
+        localStorage.removeItem('token')
+        window.location.reload(false);
     }
     render() {
         return (
@@ -25,12 +30,14 @@ class Navbar extends Component {
                                         <a className="nav-link" href="#" onClick={() => { this.create() }}>Create App <span className="sr-only">(current)</span></a>
                                     </li>
                                     <li className="nav-item active">
-                                        <a className="nav-link" href="#">Logout <span className="sr-only">(current)</span></a>
+                                        <a className="nav-link" href="#" onClick={() => { this.logout() }}>Logout <span className="sr-only">(current)</span></a>
                                     </li>
                                 </ul>
                             </div>
                             :
-                            <div>ews cliente</div>
+                            <li className="nav-item active">
+                                <a className="nav-link" href="#" onClick={() => { this.logout() }}>Logout <span className="sr-only">(current)</span></a>
+                            </li>
                         }
                     </div>
                     :
