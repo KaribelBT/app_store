@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Upateapp extends Component {
+class Updateapp extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -60,7 +60,7 @@ class Upateapp extends Component {
     }
     render() {
         return (
-            <div className="row">
+            <div className="row form-box">
                 <div className="col-lg-12">
                     <div className="row">
                         <div className="col-lg-12">
@@ -98,4 +98,4 @@ class Upateapp extends Component {
     }
 }
 
-export default Upateapp;
+export default Updateapp;

@@ -52,25 +52,25 @@ class Register extends Component {
     }
     render() {
         return (
-            <div className="row">
+            <div className="row form-box">
                 <div className="col-lg-12">
                     <div className="row">
                         <div className="col-lg-12">
-                            <form onSubmit={this.handleSubmit} id="register-form">
+                            <form onSubmit={this.handleSubmit}>
                                 <div className="form-group">
-                                    <input onChange={this.handleEmail} type="text" name="email" id="email" tabIndex="1" className="form-control" placeholder="Email" />
+                                    <input onChange={this.handleEmail} type="text" name="email" tabIndex="1" className="form-control" placeholder="Email" />
                                 </div>
                                 <div className="form-group">
-                                    <input onChange={this.handlePassword} type="password" name="password" id="password" tabIndex="2" className="form-control" placeholder="Password" />
+                                    <input onChange={this.handlePassword} type="password" name="password" tabIndex="2" className="form-control" placeholder="Password" />
                                 </div>
                                 <div className="form-group text-center">
-                                    <input onChange={this.handleIsDev} type="checkbox" tabIndex="3" className="" name="isDev" id="isDev" />
+                                    <input onChange={this.handleIsDev} type="checkbox" tabIndex="3" className="" name="isDev" />
                                     <label htmlFor="isDev"> Click here if you are a developer</label>
                                 </div>
                                 <div className="form-group">
                                     <div className="row">
                                         <div className="col-sm-12">
-                                            <input type="submit" name="register-submit" id="register-submit" tabIndex="4" className="form-control btn btn-register" value="Register Now" />
+                                            <input type="submit" name="register-submit" tabIndex="4" className="form-control btn btn-login" value="Register Now" />
                                         </div>
                                     </div>
                                 </div>

@@ -10,6 +10,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url("./assets/background.jpg");
 }
 .panel-login {
 border-color: #ccc;
@@ -89,24 +90,11 @@ color: #888;
 text-decoration: underline;
 color: #666;
 }
-
-.btn-register {
-background-color: #1CB94E;
-outline: none;
-color: #fff;
-font-size: 14px;
-height: auto;
-font-weight: normal;
-padding: 14px 0;
-text-transform: uppercase;
-border-color: #1CB94A;
-}
-.btn-register:hover,
-.btn-register:focus {
-color: #fff;
-background-color: #1CA347;
-border-color: #1CA347;
-}
 .modal{
   background-color: #00000070;
+}
+.form-box {
+  background-color: white;
+  padding-top:20px;
+  border-radius: 0.5em;
 }

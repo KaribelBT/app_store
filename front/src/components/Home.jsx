@@ -57,7 +57,7 @@ class Home extends Component {
                     <div className="row">
                         <div className="col-lg-12">
                             <h1>Welcome  {this.props.user.email}</h1>
-                            {/* <Createapp modalDisplay={this.modalDisplay} modalText={this.modalText} /> */}
+                            <Createapp modalDisplay={this.modalDisplay} modalText={this.modalText} />
                             {Object.keys(this.state.selectedApp).length > 0 ?
                                 <Updateapp 
                                     modalDisplay={this.modalDisplay} 
