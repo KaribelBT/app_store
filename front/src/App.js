@@ -9,8 +9,7 @@ class App extends Component {
     super(props)
     this.state = {
       showRegister: false,
-      logUser: localStorage.getItem('token')? localStorage.getItem('token') : null,
-      user:{}
+      user:localStorage.getItem('user')? JSON.parse(localStorage.getItem('user')) : {}
     }
   }
   showRegisterForm = (value) => {
@@ -19,9 +18,8 @@ class App extends Component {
     })
   }
   logUser = (value) => {
-    localStorage.setItem('token', JSON.stringify(value));
+    localStorage.setItem('user', JSON.stringify(this.parseJwt(value)));
     this.setState({
-      logUser: value,
       user:this.parseJwt(value)
     })
   }
@@ -38,7 +36,7 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        {!this.state.logUser ?
+        {Object.keys(this.state.user).length == 0 ?
           <div>
             {this.state.showRegister ?
               <Register
