@@ -39,7 +39,9 @@ class Register extends Component {
                 body: JSON.stringify(this.state)
             });
             let respLogin = await resultLogin.json();
-            console.log(respLogin)
+            if(respLogin.token){
+                this.props.logUser(respLogin.token)
+            }
         }
     }
     showRegisterForm = () => {

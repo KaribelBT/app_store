@@ -26,7 +26,9 @@ class Login extends Component {
             body: JSON.stringify(this.state)
         });
         let resp = await result.json();
-        console.log(resp)
+        if(resp.token){
+            this.props.logUser(resp.token)
+        }
     }
     showRegisterForm = () => {
         this.props.showRegisterForm(true)
