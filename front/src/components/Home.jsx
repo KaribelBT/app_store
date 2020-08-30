@@ -68,7 +68,7 @@ class Home extends Component {
                                 :
                                 null
                             }
-                            {Object.keys(this.state.selectedApp).length > 0 ? 
+                            {Object.keys(this.state.selectedApp).length > 0 && !this.props.displayCreate ? 
                                 <Updateapp 
                                     modalDisplay={this.modalDisplay} 
                                     modalText={this.modalText} 
