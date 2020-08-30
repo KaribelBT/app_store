@@ -26,8 +26,11 @@ class Login extends Component {
             body: JSON.stringify(this.state)
         });
         let resp = await result.json();
-        if(resp.token){
+        if (resp.token) {
             this.props.logUser(resp.token)
+        } else {
+            this.props.modalDisplay('block')
+            this.props.modalText(resp.error)
         }
     }
     showRegisterForm = () => {

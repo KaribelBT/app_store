@@ -20,7 +20,7 @@ class Register extends Component {
         })
     }
     handleIsDev = (event) => {
-        this.setState ({
+        this.setState({
             isDev: event.target.checked
         })
     }
@@ -32,16 +32,19 @@ class Register extends Component {
             body: JSON.stringify(this.state)
         });
         let resp = await result.json();
-        if(resp.id){
+        if (resp.id) {
             let resultLogin = await fetch(`http://localhost:3001/api/users/login`, {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(this.state)
             });
             let respLogin = await resultLogin.json();
-            if(respLogin.token){
+            if (respLogin.token) {
                 this.props.logUser(respLogin.token)
-            }
+            } 
+        }else {
+            this.props.modalDisplay('block')
+            this.props.modalText(resp.error)
         }
     }
     showRegisterForm = () => {
@@ -56,10 +59,10 @@ class Register extends Component {
                             <form onSubmit={this.handleSubmit} id="register-form">
                                 <div className="form-group">
                                     <input onChange={this.handleEmail} type="text" name="email" id="email" tabIndex="1" className="form-control" placeholder="Email" />
-								</div>
+                                </div>
                                 <div className="form-group">
                                     <input onChange={this.handlePassword} type="password" name="password" id="password" tabIndex="2" className="form-control" placeholder="Password" />
-								</div>
+                                </div>
                                 <div className="form-group text-center">
                                     <input onChange={this.handleIsDev} type="checkbox" tabIndex="3" className="" name="isDev" id="isDev" />
                                     <label htmlFor="isDev"> Click here if you are a developer</label>
@@ -67,8 +70,8 @@ class Register extends Component {
                                 <div className="form-group">
                                     <div className="row">
                                         <div className="col-sm-12">
-                                             <input type="submit" name="register-submit" id="register-submit" tabIndex="4" className="form-control btn btn-register" value="Register Now" />
-										</div>
+                                            <input type="submit" name="register-submit" id="register-submit" tabIndex="4" className="form-control btn btn-register" value="Register Now" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -80,7 +83,7 @@ class Register extends Component {
                                         </div>
                                     </div>
                                 </div>
-							</form>
+                            </form>
                         </div>
                     </div>
                 </div>
