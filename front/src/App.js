@@ -9,7 +9,7 @@ class App extends Component {
     super(props)
     this.state = {
       showRegister: false,
-      logUser: null,
+      logUser: localStorage.getItem('token')? localStorage.getItem('token') : null,
       user:{}
     }
   }
@@ -19,6 +19,7 @@ class App extends Component {
     })
   }
   logUser = (value) => {
+    localStorage.setItem('token', JSON.stringify(value));
     this.setState({
       logUser: value,
       user:this.parseJwt(value)
