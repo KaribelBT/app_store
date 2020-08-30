@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
-import Login from './components/Login'
-import Register from './components/Register'
-import Home from './components/Home'
+import Login from './components/Login.jsx'
+import Register from './components/Register.jsx'
+import Home from './components/Home.jsx'
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       showRegister: false,
+      token:localStorage.getItem('token')? localStorage.getItem('token') : false,
       user:localStorage.getItem('user')? JSON.parse(localStorage.getItem('user')) : {}
     }
   }
@@ -18,6 +19,7 @@ class App extends Component {
     })
   }
   logUser = (value) => {
+    localStorage.setItem('token', JSON.stringify(value));
     localStorage.setItem('user', JSON.stringify(this.parseJwt(value)));
     this.setState({
       user:this.parseJwt(value)
