@@ -54,15 +54,19 @@ class Createapp extends Component {
                 "Authorization" : `Bearer ${JSON.parse(localStorage.getItem('token'))}` 
             },
             body: JSON.stringify({
-                "id_category": JSON.parse(this.state.category),
-                "name": this.state.name,
-                "price": JSON.parse(this.state.price),
-                "img_url": this.state.img_url
+                "id_category": JSON.parse(this.state.category) ? JSON.parse(this.state.category) : null,
+                "name": this.state.name ? this.state.name : null,
+                "price": JSON.parse(this.state.price) ? JSON.parse(this.state.price) : null,
+                "img_url": this.state.img_url ? this.state.img_url : null
             })
         });
         let resp = await result.json();
         if(resp.app){
             this.props.modalDisplay('block')
+            this.props.modalText('App created succesfully')
+        }else{
+            this.props.modalDisplay('block')
+            this.props.modalText(resp.error)
         }
     }
     render() {

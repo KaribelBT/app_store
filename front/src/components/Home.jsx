@@ -6,14 +6,20 @@ class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            displayModal:'none'
+            displayModal:'none',
+            text:null
         }
     }
     modalDisplay = (value) => {
         this.setState({
             displayModal:value
         })
-    }    
+    }
+    modalText = (value) => {
+        this.setState({
+            text:value
+        })
+    }        
     render() {
         return (
             <div className="row">
@@ -21,11 +27,11 @@ class Home extends Component {
                     <div className="row">
                         <div className="col-lg-12">
                             <h1>Welcome  {this.props.user.email}</h1>
-                            <Createapp modalDisplay={this.modalDisplay} />
+                            <Createapp modalDisplay={this.modalDisplay} modalText={this.modalText} />
                         </div>
                     </div>
                 </div>
-                <Modal display={this.state.displayModal} modalDisplay={this.modalDisplay}/>
+                <Modal text={this.state.text} display={this.state.displayModal} modalDisplay={this.modalDisplay}/>
             </div>
         )
     }

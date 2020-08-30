@@ -10,11 +10,10 @@ class Modal extends Component {
     render() {
         return (
             <div className="modal fade show" tabIndex="-1" role="dialog" style={{"display":this.props.display}}>
-
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-body">
-                            <p>Modal body text goes here.</p>
+                            <p>{this.props.text}</p>
                         </div>
                         <div className="modal-footer">
                             <button onClick={this.closeModal} type="button" className="btn btn-primary">Ok</button>
