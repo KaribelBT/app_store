@@ -7,6 +7,7 @@ class Listappbycategory extends Component {
     render() {
         return (
             <div className="row">
+                <h3 className="text-center">Apps List:</h3>   
                 <table className="table">
                     <thead>
                         <tr>

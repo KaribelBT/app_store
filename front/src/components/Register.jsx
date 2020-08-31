@@ -57,6 +57,7 @@ class Register extends Component {
                     <div className="row">
                         <div className="col-lg-12">
                             <form onSubmit={this.handleSubmit}>
+                            <h3 class="text-center">Sign Up</h3>
                                 <div className="form-group">
                                     <input onChange={this.handleEmail} type="text" name="email" tabIndex="1" className="form-control" placeholder="Email" />
                                 </div>

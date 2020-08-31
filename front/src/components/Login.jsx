@@ -43,6 +43,7 @@ class Login extends Component {
                     <div className="row">
                         <div className="col-lg-12">
                             <form onSubmit={this.handleSubmit}>
+                                <h3 className="text-center">Sign In</h3>
                                 <div className="form-group">
                                     <input onChange={this.handleEmail} type="text" name="email" tabIndex="1" className="form-control" placeholder="Email" />
                                 </div>

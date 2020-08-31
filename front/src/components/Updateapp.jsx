@@ -66,6 +66,7 @@ class Updateapp extends Component {
                     <div className="row">
                         <div className="col-lg-12">
                             <form onSubmit={this.handleSubmit}>
+                                <h3 className="text-center">Modify your app</h3>   
                                 <div className="form-group">
                                     <select disabled="disabled"  name="categories" className="form-control" value={this.state.selectedApp.id_category}>
                                         {this.state.categories.map(c=>{

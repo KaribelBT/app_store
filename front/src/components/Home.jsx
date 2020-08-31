@@ -110,7 +110,7 @@ class Home extends Component {
                 <div className="col-lg-12">
                     <div className="row">
                         <div className="col-lg-12">
-                            <h1>Welcome  {this.props.user.email}</h1>
+                            <h1 className="text-center">Welcome  {this.props.user.email}</h1>
                             {this.props.user.isDev ?
                                 <div>
                                     {this.props.displayCreate ?

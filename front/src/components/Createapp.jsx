@@ -78,6 +78,7 @@ class Createapp extends Component {
                     <div className="row">
                         <div className="col-lg-12">
                             <form onSubmit={this.handleSubmit}>
+                                <h3 className="text-center">Create your app</h3>   
                                 <div className="form-group">
                                     <select onChange={this.handleCategories}  name="categories" className="form-control">
                                         <option value="">Select an app category</option>

@@ -7,6 +7,7 @@ class Listcategory extends Component {
     render() {
         return (
             <div className="row">
+                <h3 className="text-center">Apps Categories:</h3>   
                 <table className="table">
                     <thead>
                         <tr>
