@@ -15,6 +15,7 @@ class App extends Component {
       user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
       displayModal: 'none',
       displayCreate:false,
+      displayUpdate:false,
       text: null
     }
   }
@@ -43,6 +44,12 @@ class App extends Component {
       displayCreate: value
     })
   }   
+  showListApps = (value) => {
+    this.setState({
+      displayCreate: false,
+      displayUpdate: value
+    })
+  }   
   modalDisplay = (value) => {
     this.setState({
       displayModal: value
@@ -59,6 +66,7 @@ class App extends Component {
         <Navbar 
           user={this.state.user}
           showCreate={this.showCreate} 
+          showListApps={this.showListApps} 
         />
         <div className="container">
           {Object.keys(this.state.user).length == 0 ?
@@ -81,7 +89,9 @@ class App extends Component {
               <Home 
                 user={this.state.user}
                 displayCreate={this.state.displayCreate}
-                showCreate={this.showCreate}  
+                displayUpdate={this.state.displayUpdate}
+                showCreate={this.showCreate}
+                showListApps={this.showListApps}  
               />
             </div>
           }

@@ -48,6 +48,7 @@ class Home extends Component {
        this.setState({
         selectedApp:appSelected[0]
        })
+       this.props.showListApps(true)
     }
     componentDidMount() {
         if (this.props.user.isDev) {
@@ -70,7 +71,7 @@ class Home extends Component {
                                 :
                                 null
                             }
-                            {Object.keys(this.state.selectedApp).length > 0 && !this.props.displayCreate ? 
+                            {this.props.displayUpdate && !this.props.displayCreate ? 
                                 <Updateapp 
                                     modalDisplay={this.modalDisplay} 
                                     modalText={this.modalText} 
@@ -79,7 +80,7 @@ class Home extends Component {
                                 /> :
                                 null
                             }
-                            {this.state.apps.length > 0 && !this.props.displayCreate && Object.keys(this.state.selectedApp).length == 0 ?
+                            {this.state.apps.length > 0 && !this.props.displayCreate && !this.props.displayUpdate  ?
                                 <Listapp
                                     apps={this.state.apps}
                                     modalDisplay={this.modalDisplay}

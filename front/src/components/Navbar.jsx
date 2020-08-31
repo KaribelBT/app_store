@@ -7,6 +7,9 @@ class Navbar extends Component {
     create = () => {
         this.props.showCreate(true)
     }
+    listApps = () => {
+        this.props.showListApps(false)
+    }
     logout = () => {
         localStorage.removeItem('user')
         localStorage.removeItem('token')
@@ -26,6 +29,9 @@ class Navbar extends Component {
                         {this.props.user.isDev ?
                             <div className="collapse navbar-collapse" id="navbarNav">
                                 <ul className="navbar-nav">
+                                    <li className="nav-item active">
+                                        <a className="nav-link" href="#" onClick={() => { this.listApps() }}>List my Apps <span className="sr-only">(current)</span></a>
+                                    </li>
                                     <li className="nav-item active">
                                         <a className="nav-link" href="#" onClick={() => { this.create() }}>Create App <span className="sr-only">(current)</span></a>
                                     </li>
