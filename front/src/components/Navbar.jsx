@@ -25,21 +25,19 @@ class Navbar extends Component {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 {Object.keys(this.props.user).length > 0 ?
-                    <div>
-                        {this.props.user.isDev ?
-                            <div className="collapse navbar-collapse" id="navbarNav">
+                    <div className="collapse navbar-collapse" id="navbarNav">
+                        {this.props.user.isDev ?                            
                                 <ul className="navbar-nav">
-                                    <li className="nav-item active">
+                                    <li className="nav-item text-center active">
                                         <a className="nav-link" href="#" onClick={() => { this.listApps() }}>List my Apps <span className="sr-only">(current)</span></a>
                                     </li>
-                                    <li className="nav-item active">
+                                    <li className="nav-item  text-center active">
                                         <a className="nav-link" href="#" onClick={() => { this.create() }}>Create App <span className="sr-only">(current)</span></a>
                                     </li>
-                                    <li className="nav-item active">
+                                    <li className="nav-item  text-center active">
                                         <a className="nav-link" href="#" onClick={() => { this.logout() }}>Logout <span className="sr-only">(current)</span></a>
                                     </li>
                                 </ul>
-                            </div>
                             :
                             <li className="nav-item active">
                                 <a className="nav-link" href="#" onClick={() => { this.logout() }}>Logout <span className="sr-only">(current)</span></a>
@@ -53,5 +51,4 @@ class Navbar extends Component {
         )
     }
 }
-
 export default Navbar
