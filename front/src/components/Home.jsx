@@ -7,7 +7,6 @@ import Listcategory from './Listcategory.jsx'
 import Listappbycategory from './Listappbycategory.jsx'
 import Appdetail from './Appdetail.jsx'
 
-
 class Home extends Component {
     constructor(props) {
         super(props)
@@ -18,7 +17,9 @@ class Home extends Component {
             categories: [],
             appsByCategory: [],
             selectedApp: {},
-            showListCategories: true
+            showListCategories: true,
+            showAppsByCategory: false,
+            appDetail: {}
         }
     }
     modalDisplay = (value) => {
@@ -89,6 +90,13 @@ class Home extends Component {
             })
         }
     }
+    getAppSelectedByCategory = (id) => {
+        let appDetail = this.state.appsByCategory.filter(a => a.id_app === id)
+        this.setState({
+            appDetail: appDetail[0],
+            showAppsByCategory: true
+        })
+    }
     componentDidMount() {
         if (this.props.user.isDev) {
             this.listApp()
@@ -144,14 +152,21 @@ class Home extends Component {
                                         :
                                         null
                                     }
-                                    {this.state.appsByCategory.length > 0 ?
+                                    {this.state.appsByCategory.length > 0 && !this.state.showAppsByCategory ?
                                         <Listappbycategory
                                             appsByCategory={this.state.appsByCategory}
+                                            getAppSelectedByCategory={this.getAppSelectedByCategory}
                                         />
                                         :
                                         null
                                     }
-                                    <Appdetail/>
+                                    {this.state.showAppsByCategory ?
+                                        <Appdetail
+                                            appDetail={this.state.appDetail}
+                                        />
+                                        :
+                                        null
+                                    }
                                 </div>
                             }
                         </div>

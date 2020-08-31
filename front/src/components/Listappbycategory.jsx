@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
 class Listappbycategory extends Component {
+    idApp = (id) => {
+        this.props.getAppSelectedByCategory(id)
+    }
     render() {
         return (
             <div className="row">
@@ -19,7 +22,7 @@ class Listappbycategory extends Component {
                                 <td>{ac.app_name}</td>
                                 <td>{ac.category_name}</td>
                                 <td> 
-                                    <button type="button" className="btn btn-primary"><i className="far fa-eye"></i></button>                                    
+                                    <button onClick={() => { this.idApp(ac.id_app) }} type="button" className="btn btn-primary"><i className="far fa-eye"></i></button>                                    
                                 </td>
                             </tr>);
                         })}
