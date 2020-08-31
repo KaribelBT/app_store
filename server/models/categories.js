@@ -19,7 +19,7 @@ class Categories {
     };
     listApps(sql, id) {
         let resp = sql.query(
-            `SELECT a.id_category , c.name category_name, a.name app_name, a.price app_price, a.img_url app_img_url
+            `SELECT a.id_category , c.name category_name, a.id id_app, a.name app_name, a.price app_price, a.img_url app_img_url
             FROM apps a
             JOIN categories c ON a.id_category = c.id
             WHERE c.id = :id`, {

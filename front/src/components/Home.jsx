@@ -4,6 +4,9 @@ import Createapp from './Createapp.jsx'
 import Updateapp from './Updateapp.jsx'
 import Listapp from './Listapp.jsx'
 import Listcategory from './Listcategory.jsx'
+import Listappbycategory from './Listappbycategory.jsx'
+import Appdetail from './Appdetail.jsx'
+
 
 class Home extends Component {
     constructor(props) {
@@ -13,7 +16,9 @@ class Home extends Component {
             text: null,
             apps: [],
             categories: [],
-            selectedApp: {}
+            appsByCategory: [],
+            selectedApp: {},
+            showListCategories: true
         }
     }
     modalDisplay = (value) => {
@@ -46,7 +51,7 @@ class Home extends Component {
         }
     }
     getApp = (id) => {
-        let appSelected = this.state.apps.filter(a => a.id == id)
+        let appSelected = this.state.apps.filter(a => a.id === id)
         this.setState({
             selectedApp: appSelected[0]
         })
@@ -78,7 +83,10 @@ class Home extends Component {
             this.modalDisplay('block')
             this.modalText(resp.error)
         } else {
-            console.log(resp)
+            this.setState({
+                appsByCategory: resp,
+                showListCategories: false
+            })
         }
     }
     componentDidMount() {
@@ -128,10 +136,22 @@ class Home extends Component {
                                 </div>
                                 :
                                 <div>
-                                    <Listcategory 
-                                        categories={this.state.categories}
-                                        getCategory={this.getCategory}
-                                    />
+                                    {this.state.showListCategories ?
+                                        <Listcategory
+                                            categories={this.state.categories}
+                                            getCategory={this.getCategory}
+                                        />
+                                        :
+                                        null
+                                    }
+                                    {this.state.appsByCategory.length > 0 ?
+                                        <Listappbycategory
+                                            appsByCategory={this.state.appsByCategory}
+                                        />
+                                        :
+                                        null
+                                    }
+                                    <Appdetail/>
                                 </div>
                             }
                         </div>

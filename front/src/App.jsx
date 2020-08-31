@@ -69,7 +69,7 @@ class App extends Component {
           showListApps={this.showListApps} 
         />
         <div className="container">
-          {Object.keys(this.state.user).length == 0 ?
+          {Object.keys(this.state.user).length === 0 ?
             <div>
               {this.state.showRegister ?
                 <Register

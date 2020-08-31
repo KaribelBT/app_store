@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 
 class Navbar extends Component {
-    constructor(props) {
-        super(props)
-    }
     create = () => {
         this.props.showCreate(true)
     }
@@ -40,7 +37,7 @@ class Navbar extends Component {
                             </ul>
                             :
                             <ul className="navbar-nav">
-                                <li className="nav-item active">
+                                <li className="nav-item text-center active">
                                     <a className="nav-link" href="#" onClick={() => { this.logout() }}>Logout <span className="sr-only">(current)</span></a>
                                 </li>
                             </ul>
@@ -53,5 +50,4 @@ class Navbar extends Component {
         )
     }
 }
-
 export default Navbar

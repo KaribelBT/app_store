@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 
 class Listcategory extends Component {
-    constructor(props) {
-        super(props)
-    }
     idCategory = (id) => {
         this.props.getCategory(id)
     }

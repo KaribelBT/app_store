@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 
 class Listapp extends Component {
-    constructor(props) {
-        super(props)
-    }
     deleteApp = async (id) => {
         let result = await fetch(`http://localhost:3001/api/apps/${id}`, {
             method: 'DELETE',
