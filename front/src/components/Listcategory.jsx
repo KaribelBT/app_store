@@ -4,6 +4,9 @@ class Listcategory extends Component {
     constructor(props) {
         super(props)
     }
+    idCategory = (id) => {
+        this.props.getCategory(id)
+    }
     render() {
         return (
             <div className="row">
@@ -20,7 +23,7 @@ class Listcategory extends Component {
                                 <td>{c.id}</td>
                                 <td>{c.name}</td>
                                 <td> 
-                                    <button type="button" className="btn btn-primary"><i class="far fa-eye"></i></button>                                    
+                                    <button onClick={() => { this.idCategory(c.id) }} type="button" className="btn btn-primary"><i className="far fa-eye"></i></button>                                    
                                 </td>
                             </tr>);
                         })}

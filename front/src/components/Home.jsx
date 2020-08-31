@@ -60,10 +60,26 @@ class Home extends Component {
                 "Authorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}`
             },
         });
-        let resp = await result.json();
+        let resp = await result.json()
         this.setState({
             categories: resp
         })
+    }
+    getCategory = async (id) => {
+        let result = await fetch(`http://localhost:3001/api/categories/apps/${id}`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}`
+            },
+        });
+        let resp = await result.json()
+        if (resp.error) {
+            this.modalDisplay('block')
+            this.modalText(resp.error)
+        } else {
+            console.log(resp)
+        }
     }
     componentDidMount() {
         if (this.props.user.isDev) {
@@ -114,6 +130,7 @@ class Home extends Component {
                                 <div>
                                     <Listcategory 
                                         categories={this.state.categories}
+                                        getCategory={this.getCategory}
                                     />
                                 </div>
                             }
