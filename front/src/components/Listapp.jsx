@@ -45,10 +45,11 @@ class Listapp extends Component {
                                 <td>{a.name}</td>
                                 <td>{a.img_url}</td>
                                 <td>{a.price}</td>
-                                <td> <button type="button" onClick={() => { this.updateApp(a.id) }} className="btn btn-success"><i className="fas fa-edit"></i></button>
-                                    <button onClick={() => { this.deleteApp(a.id) }} type="button" className="btn btn-danger"><i className="far fa-trash-alt"></i></button></td>
+                                <td> 
+                                    <button type="button" onClick={() => { this.updateApp(a.id) }} className="btn btn-success"><i className="fas fa-edit"></i></button>
+                                    <button onClick={() => { this.deleteApp(a.id) }} type="button" className="btn btn-danger"><i className="far fa-trash-alt"></i></button>
+                                </td>
                             </tr>);
-
                         })}
                     </tbody>
                 </table>

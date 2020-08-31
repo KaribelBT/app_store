@@ -3,6 +3,7 @@ import Modal from './Modal.jsx';
 import Createapp from './Createapp.jsx'
 import Updateapp from './Updateapp.jsx'
 import Listapp from './Listapp.jsx'
+import Listcategory from './Listcategory.jsx'
 
 class Home extends Component {
     constructor(props) {
@@ -11,7 +12,8 @@ class Home extends Component {
             displayModal: 'none',
             text: null,
             apps: [],
-            selectedApp:{}
+            categories: [],
+            selectedApp: {}
         }
     }
     modalDisplay = (value) => {
@@ -24,7 +26,7 @@ class Home extends Component {
             text: value
         })
     }
-    listApp = async ()  => {
+    listApp = async () => {
         let result = await fetch(`http://localhost:3001/api/apps`, {
             method: 'GET',
             headers: {
@@ -43,16 +45,31 @@ class Home extends Component {
             })
         }
     }
-    getApp = (id) =>{
-       let appSelected = this.state.apps.filter(a => a.id == id)
-       this.setState({
-        selectedApp:appSelected[0]
-       })
-       this.props.showListApps(true)
+    getApp = (id) => {
+        let appSelected = this.state.apps.filter(a => a.id == id)
+        this.setState({
+            selectedApp: appSelected[0]
+        })
+        this.props.showListApps(true)
+    }
+    listCategory = async () => {
+        let result = await fetch(`http://localhost:3001/api/categories`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}`
+            },
+        });
+        let resp = await result.json();
+        this.setState({
+            categories: resp
+        })
     }
     componentDidMount() {
         if (this.props.user.isDev) {
             this.listApp()
+        } else {
+            this.listCategory()
         }
     }
     render() {
@@ -62,34 +79,44 @@ class Home extends Component {
                     <div className="row">
                         <div className="col-lg-12">
                             <h1>Welcome  {this.props.user.email}</h1>
-                            {this.props.displayCreate ?
-                                <Createapp 
-                                    modalDisplay={this.modalDisplay} 
-                                    modalText={this.modalText}
-                                    listApp={this.listApp} 
-                                />
+                            {this.props.user.isDev ?
+                                <div>
+                                    {this.props.displayCreate ?
+                                        <Createapp
+                                            modalDisplay={this.modalDisplay}
+                                            modalText={this.modalText}
+                                            listApp={this.listApp}
+                                        />
+                                        :
+                                        null
+                                    }
+                                    {this.props.displayUpdate && !this.props.displayCreate ?
+                                        <Updateapp
+                                            modalDisplay={this.modalDisplay}
+                                            modalText={this.modalText}
+                                            selectedApp={this.state.selectedApp}
+                                            listApp={this.listApp}
+                                        /> :
+                                        null
+                                    }
+                                    {this.state.apps.length > 0 && !this.props.displayCreate && !this.props.displayUpdate ?
+                                        <Listapp
+                                            apps={this.state.apps}
+                                            modalDisplay={this.modalDisplay}
+                                            modalText={this.modalText}
+                                            listApp={this.listApp}
+                                            getApp={this.getApp}
+                                        /> :
+                                        null
+                                    }
+                                </div>
                                 :
-                                null
+                                <div>
+                                    <Listcategory 
+                                        categories={this.state.categories}
+                                    />
+                                </div>
                             }
-                            {this.props.displayUpdate && !this.props.displayCreate ? 
-                                <Updateapp 
-                                    modalDisplay={this.modalDisplay} 
-                                    modalText={this.modalText} 
-                                    selectedApp={this.state.selectedApp}
-                                    listApp={this.listApp} 
-                                /> :
-                                null
-                            }
-                            {this.state.apps.length > 0 && !this.props.displayCreate && !this.props.displayUpdate  ?
-                                <Listapp
-                                    apps={this.state.apps}
-                                    modalDisplay={this.modalDisplay}
-                                    modalText={this.modalText}
-                                    listApp={this.listApp}
-                                    getApp={this.getApp}
-                                /> :
-                                null
-                            }                            
                         </div>
                     </div>
                 </div>
