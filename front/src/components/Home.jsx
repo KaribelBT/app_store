@@ -38,6 +38,9 @@ class Home extends Component {
                 apps: resp.appsList
             })
             this.props.showCreate(false)
+            this.setState({
+                selectedApp: {}
+            })
         }
     }
     getApp = (id) =>{
@@ -63,7 +66,6 @@ class Home extends Component {
                                     modalDisplay={this.modalDisplay} 
                                     modalText={this.modalText}
                                     listApp={this.listApp} 
-
                                 />
                                 :
                                 null
@@ -73,10 +75,11 @@ class Home extends Component {
                                     modalDisplay={this.modalDisplay} 
                                     modalText={this.modalText} 
                                     selectedApp={this.state.selectedApp}
+                                    listApp={this.listApp} 
                                 /> :
                                 null
                             }
-                            {this.state.apps.length > 0 && !this.props.displayCreate ?
+                            {this.state.apps.length > 0 && !this.props.displayCreate && Object.keys(this.state.selectedApp).length == 0 ?
                                 <Listapp
                                     apps={this.state.apps}
                                     modalDisplay={this.modalDisplay}
@@ -85,8 +88,7 @@ class Home extends Component {
                                     getApp={this.getApp}
                                 /> :
                                 null
-                            }
-                            
+                            }                            
                         </div>
                     </div>
                 </div>

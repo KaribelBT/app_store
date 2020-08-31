@@ -53,6 +53,7 @@ class Updateapp extends Component {
         if(resp.appUpdated){
             this.props.modalDisplay('block')
             this.props.modalText('App updated succesfully')
+            this.props.listApp()
         }else{
             this.props.modalDisplay('block')
             this.props.modalText(resp.error)

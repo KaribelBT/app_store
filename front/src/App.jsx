@@ -23,11 +23,6 @@ class App extends Component {
       showRegister: value
     })
   }
-  showCreate = (value) => {
-    this.setState({
-      displayCreate: value
-    })
-  }
   logUser = (value) => {
     localStorage.setItem('token', JSON.stringify(value));
     localStorage.setItem('user', JSON.stringify(this.parseJwt(value)));
@@ -43,6 +38,11 @@ class App extends Component {
     }).join(''));
     return JSON.parse(jsonPayload);
   };
+  showCreate = (value) => {
+    this.setState({
+      displayCreate: value
+    })
+  }   
   modalDisplay = (value) => {
     this.setState({
       displayModal: value
