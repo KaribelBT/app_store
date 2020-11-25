@@ -1,9 +1,52 @@
+const createError = require('http-errors');
 const express = require('express');
-const server = express();
-const port = 3001;
-const bodyParser = require('body-parser');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const cors = require('cors');
-const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
+const app = express();
+app.use(cors());
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  next(createError(404));
+});
+
+// error handler
+app.use(function (err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+const port = process.env.PORT || 4000;
+
+module.exports = app;
+
+
+
+
+
+
+
+
+/* const jwt = require('jsonwebtoken');
 const secret = require('./config/config.js');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('mysql://root@127.0.0.1:3306/app_store')
@@ -162,4 +205,4 @@ server.delete('/api/buy', myUser.validToken(jwt), async (req, res) => {
     catch{
         res.status(400).json({ error: 'Bad Request, invalid or missing input' })
     }
-});
+}); */
