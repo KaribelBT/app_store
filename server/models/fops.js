@@ -2,23 +2,23 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class Categories extends Model {
+  class Fops extends Model {
     static associate(models) {
-      Categories.hasMany( models.Apps,
+      Fops.hasMany(models.Purchases,
         {
           onDelete: "NO ACTION",
           onUpdate: "NO ACTION",
         },
         {
           foreignKey: {
-            name: "categoryId",
+            name: "fopId",
             allowNull: false,
           },
         }
       );
     }
   }
-  Categories.init(
+  Fops.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -33,8 +33,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       paranoid: true,
-      modelName: "Categories",
+      modelName: "Fops",
     }
   );
-  return Categories;
+  return Fops;
 };

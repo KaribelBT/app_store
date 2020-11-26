@@ -1,66 +1,49 @@
-class Purchases {
-    create(sql, price, id_user) {
-        let resp = sql.query(
-            `INSERT INTO purchases (price, id_user) 
-            VALUES (:price, :id_user)`,
-            {
-                replacements: {
-                    id_user,
-                    price
-                }
-            });
-        return resp
-    };
-    insertPurchasesApps(sql, id_purchase, id_app) {
-        let resp = sql.query(
-            `INSERT INTO purchases_apps(id_purchase, id_app) 
-             VALUES (:id_purchase,  :id_app)`,
-            {
-                replacements: {
-                    id_purchase,
-                    id_app
-                }
-            });
-        return resp
+'use strict'
+const { Model } = require("sequelize");
+module.exports = (sequelize, DataTypes) => {
+  class Purchases extends Model {
+    static associate(models) {
+      Purchases.belongsTo(models.Fops, {
+        foreignKey: {
+          name: "fopId",
+          allowNull: false,
+        },
+      }); 
+      Purchases.belongsTo(models.Users, {
+        foreignKey: {
+          name: "userId",
+          allowNull: false,
+        },
+      });     
+      Purchases.belongsToMany(models.Apps, {
+        through: "PurchasesApps",
+        as: "apps",
+        foreignKey: {
+          name: "purchaseId",
+          allowNull: false,
+        }
+      });
     }
-    get(sql, id_user, id_purchase) {
-        let resp = sql.query(
-            `SELECT DISTINCT p.id, p.price purchase_price, a.name app_name, c.name app_category, a.price app_price, a.img_url 
-            FROM purchases p
-            JOIN purchases_apps pa ON p.id = pa.id_purchase
-            JOIN apps a ON a.id = pa.id_app
-            JOIN categories c ON c.id = a.id_category
-            WHERE p.id_user = :id_user
-            AND p.id = :id_purchase`, {
-            replacements: {
-                id_user,
-                id_purchase
-            },
-            type: sql.QueryTypes.SELECT
-        })
-        return resp;
+  }
+  Purchases.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      fopId: DataTypes.INTEGER,
+      price: DataTypes.FLOAT,
+      userId: DataTypes.INTEGER,
+      createdAt: DataTypes.DATE,
+      updatedAt: DataTypes.DATE,
+      deletedAt: DataTypes.DATE
+    },
+    {
+      sequelize,
+      paranoid: true,
+      modelName: "Purchases",
     }
-    delete(sql, id) {
-        let resp = sql.query(
-            `DELETE FROM purchases
-            WHERE id = :id`, {
-            replacements: {
-                id
-            },
-            type: sql.QueryTypes.DELETE
-        });
-        return resp
-    }
-    deletePurchasedApps(sql, id_purchase) {
-        let resp = sql.query(
-            `DELETE FROM purchases_apps
-            WHERE id_purchase = :id_purchase`, {
-            replacements: {
-                id_purchase
-            },
-            type: sql.QueryTypes.DELETE
-        });
-        return resp
-    }
+  );
+  return Purchases;
 };
-module.exports = { Purchases };
