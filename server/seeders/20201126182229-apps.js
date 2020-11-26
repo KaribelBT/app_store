@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Categories', [{
+    await queryInterface.bulkInsert('Apps', [{
       id: 1,
       categoryId: 1,
       name: 'Test App A',
@@ -11,7 +11,7 @@ module.exports = {
       devId: 2,
       createdAt: new Date
     }], {});
-    await queryInterface.bulkInsert('Categories', [{
+    await queryInterface.bulkInsert('Apps', [{
       id: 2,
       categoryId: 2,
       name: 'Test App B',
@@ -20,7 +20,7 @@ module.exports = {
       devId: 2,
       createdAt: new Date
     }], {});
-    await queryInterface.bulkInsert('Categories', [{
+    await queryInterface.bulkInsert('Apps', [{
       id: 3,
       categoryId: 3,
       name: 'Test App C',
